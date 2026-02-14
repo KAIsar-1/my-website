@@ -3,63 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Love is...</title>
+    <title>Мой сайт</title>
     <style>
+        /* Сбрасываем отступы */
         html, body {
             margin: 0;
             padding: 0;
             height: 100%;
             overflow: hidden;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #000;
         }
 
+        /* Видео на весь экран как фон */
         #myVideo {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
-            z-index: -2;
-            opacity: 0;
-            transition: opacity 1.5s ease;
+            object-fit: cover; /* Видео заполняет экран без искажений */
+            z-index: -1;
         }
 
-        .dark-layer {
+        /* Оверлей с фото и анимацией появления */
+        .overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.4);
-            z-index: -1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             opacity: 0;
-            transition: opacity 1.5s ease;
-        }
-
-        .overlay {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            color: #fff;
-            width: 90%;
+            animation: fadeIn 3s forwards; /* Анимация появления за 3 секунды */
+            animation-delay: 0.5s; /* Задержка перед началом */
         }
 
         .overlay img {
-            max-width: 100%;
-            max-height: 60vh;
-            border-radius: 20px;
-            box-shadow: 0 0 30px rgba(0,0,0,0.7);
-            opacity: 0;
-            transform: translateY(30px);
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 20px; /* Скруглённые углы */
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7); /* Тень для красоты */
         }
 
-        .overlay h1 {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
-            font-size: 3.5em;
-            margin: 20px 0 10px;
-            opacity: 0;
-            transform:
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); } /* Начало: прозрачно и чуть меньше */
+            to { opacity: 1; transform: scale(1); }     /* Конец: видно и нормальный размер */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Видео-фон (autoplay, muted, loop — обязательно для автозапуска) -->
+    <video autoplay muted loop playsinline id="myVideo">
+        <source src="your-video.mp4" type="video/mp4">
+        Ваш браузер не поддерживает видео.
+    </video>
+
+    <!-- Фото с анимацией появления -->
+    <div class="overlay">
+        <img src="your-photo.jpg" alt="Моё фото">
+    </div>
+
+</body>
+</html>
