@@ -1,6 +1,69 @@
-<div style="display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #9a17c2;; text-align: center;">
-    <div>
-        <h1>janyy</h1>
-        <img src="photo.JPG" alt="Romantic photo" style="max-width: 100%; border-radius: 10px;">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой сайт</title>
+    <style>
+        /* Сбрасываем отступы */
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Видео на весь экран как фон */
+        #myVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Видео заполняет экран без искажений */
+            z-index: -1;
+        }
+
+        /* Оверлей с фото и анимацией появления */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            animation: fadeIn 3s forwards; /* Анимация появления за 3 секунды */
+            animation-delay: 0.5s; /* Задержка перед началом */
+        }
+
+        .overlay img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 20px; /* Скруглённые углы */
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.7); /* Тень для красоты */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); } /* Начало: прозрачно и чуть меньше */
+            to { opacity: 1; transform: scale(1); }     /* Конец: видно и нормальный размер */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Видео-фон (autoplay, muted, loop — обязательно для автозапуска) -->
+    <video autoplay muted loop playsinline id="myVideo">
+        <source src="your-video.mp4" type="video/mp4">
+        Ваш браузер не поддерживает видео.
+    </video>
+
+    <!-- Фото с анимацией появления -->
+    <div class="overlay">
+        <img src="your-photo.jpg" alt="Моё фото">
     </div>
-</div>
+
+</body>
+</html>
