@@ -1,86 +1,176 @@
-#myVideo {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -2;
-    display: none; /* Скрыто пока не кликнут */
-}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Love is...</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000;
+        }
 
-.dark-layer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.4);
-    z-index: -1;
-    display: none;
-}
+        #myVideo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
 
-.overlay {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: #fff;
-}
+        .dark-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.4);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+        }
 
-.overlay img {
-    max-width: 90%;
-    max-height: 60%;
-    border-radius: 20px;
-    box-shadow: 0 0 30px rgba(0,0,0,0.7);
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 2s forwards;
-    animation-delay: 0.5s;
-}
+        .overlay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #fff;
+            width: 90%;
+        }
 
-.overlay h1 {
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    font-size: 3em;
-    margin: 20px 0 10px;
-    opacity: 0;
-    transform: translateY(-20px);
-    animation: fadeInText 2s forwards;
-    animation-delay: 2s;
-    color: #ffc0cb;
-}
+        .overlay img {
+            max-width: 100%;
+            max-height: 60vh;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.7);
+            opacity: 0;
+            transform: translateY(30px);
+        }
 
-.overlay p {
-    font-size: 1.8em;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInText 2s forwards;
-    animation-delay: 2.5s;
-    color: #ffe4e1;
-}
+        .overlay h1 {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-size: 3.5em;
+            margin: 20px 0 10px;
+            opacity: 0;
+            transform: translateY(-30px);
+            color: #ffc0cb;
+            text-shadow: 0 0 15px rgba(255,105,180,0.5);
+        }
 
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+        .overlay p {
+            font-size: 1.8em;
+            opacity: 0;
+            transform: translateY(30px);
+            color: #ffe4e1;
+            text-shadow: 0 0 10px rgba(0,0,0,0.8);
+        }
 
-@keyframes fadeInText {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
+        /* Анимации только после клика */
+        body.started #myVideo,
+        body.started .dark-layer {
+            opacity: 1;
+        }
 
-/* Курсор-указание на клик */
-.click-to-start {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
-    background: #000;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fff;
-    font-size: 2em;
-    cursor: pointer;
-    z-index: 10;
-}
+        body.started .overlay img {
+            animation: fadeInUp 2s forwards 0.5s;
+        }
+
+        body.started .overlay h1 {
+            animation: fadeInText 2s forwards 2s;
+        }
+
+        body.started .overlay p {
+            animation: fadeInText 2s forwards 2.5s;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInText {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Начальный экран */
+        .click-to-start {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            font-size: 2em;
+            cursor: pointer;
+            z-index: 10;
+            transition: opacity 1s ease;
+            opacity: 1;
+        }
+
+        .click-to-start span {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .overlay h1 { font-size: 2.5em; }
+            .overlay p { font-size: 1.4em; }
+            .click-to-start { font-size: 1.5em; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Видео -->
+    <video id="myVideo" muted loop playsinline>
+        <source src="your-video.mp4" type="video/mp4">
+        Ваш браузер не поддерживает видео.
+    </video>
+    <div class="dark-layer"></div>
+
+    <!-- Фото + текст -->
+    <div class="overlay">
+        <h1>Love is...</h1>
+        <img src="your-photo.jpg" alt="Любовь">
+        <p>выбрать быть вместе</p>
+    </div>
+
+    <!-- Экран "Нажмите, чтобы начать" -->
+    <div class="click-to-start" id="startScreen">
+        <span>Нажмите, чтобы начать</span>
+        <p style="font-size:0.6em; margin-top:30px; opacity:0.7;">💕</p>
+    </div>
+
+    <script>
+        const startScreen = document.getElementById('startScreen');
+        const video = document.getElementById('myVideo');
+
+        startScreen.addEventListener('click', () => {
+            document.body.classList.add('started');
+            video.play();
+            startScreen.style.opacity = '0';
+            setTimeout(() => {
+                startScreen.style.display = 'none';
+            }, 1000); // убираем после fade-out
+        });
+
+        // Поддержка тача на мобильных
